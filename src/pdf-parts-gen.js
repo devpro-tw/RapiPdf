@@ -204,6 +204,17 @@ function getExamplesDef(contentTypeObj, localizedExampleLabel) {
   return exampleSectionDef;
 }
 
+function convertToDateTime(obj) {
+  for (const key in obj) {
+    if (typeof obj[key] === 'object') {
+      convertToDateTime(obj[key]);
+    } else if (key === 'format' && obj[key] === 'date-time') {
+      obj.type = 'DateTime';
+      delete obj[key];
+    }
+  }
+}
+
 // Request Body Def
 function getRequestBodyDef(requestBody, schemaStyle, localize, includeExample = false) {
   if (!requestBody) {
@@ -225,6 +236,7 @@ function getRequestBodyDef(requestBody, schemaStyle, localize, includeExample = 
       let origSchema = requestBody.content[contentType].schema;
       if (origSchema) {
         origSchema = JSON.parse(JSON.stringify(origSchema));
+        convertToDateTime(origSchema);
         const schemaInObjectNotaion = schemaInObjectNotation(origSchema);
 
         if (schemaStyle === 'object') {
@@ -286,6 +298,7 @@ function getResponseDef(responses, schemaStyle, localize, includeExample = false
       let origSchema = contentTypeObj.schema;
       if (origSchema) {
         origSchema = JSON.parse(JSON.stringify(origSchema));
+        convertToDateTime(origSchema);
         const schemaInObjectNotaion = schemaInObjectNotation(origSchema);
         if (schemaStyle === 'object') {
           let schemaTreeDef;

@@ -21,6 +21,14 @@ Custom element for Open-API to PDF generation
 [Check out the usage and examples](https://mrin9.github.io/RapiPdf/)
 
 ## Build Process
+
+### Prerequisites
+- Node.js `16.20.2` (as specified in `.nvmrc`). Newer Node versions (17+) bundle OpenSSL 3.0, which breaks webpack 4's MD4 hashing (`ERR_OSSL_EVP_UNSUPPORTED`).
+```bash
+# if you use nvm, this will switch to the version defined in .nvmrc
+nvm use
+```
+
 We recommend `yarn` over `npm` as we use yarn [resolutions](https://yarnpkg.com/lang/en/docs/selective-version-resolutions/) to keep the bundle size smaller. As of this writing this feature is not supported in npm natively
 ```bash
 # Clone / Download the project then
